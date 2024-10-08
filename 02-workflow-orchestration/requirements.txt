@@ -1,0 +1,9 @@
+pandas==2.2.2
+pandas-gbq==0.23.2
+prefect==3.0.4
+prefect-gcp==0.6.1
+prefect-sqlalchemy==0.5.1
+protobuf==5.28.2
+psycopg2-binary==2.9.9
+pyarrow==14.0.2
+sqlalchemy==2.0.30
