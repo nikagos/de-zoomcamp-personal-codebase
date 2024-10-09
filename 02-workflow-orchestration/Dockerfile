@@ -1,7 +1,7 @@
 FROM prefecthq/prefect:2-latest
  # RUN apt-get install wget
 RUN apt-get update && apt-get -y install wget libpq-dev gcc curl
-RUN pip install pandas sqlalchemy psycopg2 pyarrow fastparquet "numpy<2" prefect prefect_sqlalchemy
+RUN pip install pandas sqlalchemy psycopg2 pyarrow fastparquet "numpy<2" prefect
 
 
 WORKDIR /app
