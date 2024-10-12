@@ -69,7 +69,7 @@ def etl_web_to_gcs(year: int, month: int) -> None:
 
 @flow()
 def etl_parent_flow() -> None:
-    # testing
+    # testing git creds
     #parser = argparse.ArgumentParser(description='Ingest Parquet data to GCS Bucket')
     
     #parser.add_argument('--start_month', required=True, help='start month of data')
@@ -81,7 +81,7 @@ def etl_parent_flow() -> None:
     year = 2024
 
     for month in range(start_month, end_month+1):
-        etl_web_to_gcs(year, start_month)
+        etl_web_to_gcs(year, month)
 
 
 if __name__ == "__main__":
