@@ -8,5 +8,6 @@ if __name__ == "__main__":
         entrypoint="02-workflow-orchestration/test_pandas.py:pandas_flow"
     ).deploy(
         name="test-pandas-deployment",
-        work_pool_name="my-work-pool",
+        work_pool_name="my-work-pool-process",
+        job_variables=dict(env=dict(EXTRA_PIP_PACKAGES="pandas"))
     )

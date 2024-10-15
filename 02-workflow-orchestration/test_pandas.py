@@ -1,5 +1,6 @@
-import pandas as pd # pandas is not installed
+import pandas as pd 
 from prefect import flow, task
+
 
 @task
 def create_and_print_dataframe():
@@ -9,7 +10,6 @@ def create_and_print_dataframe():
     })
     print(df)
 
-@flow() # this causes an error during deployment
-# @flow(name='test') # this works
+@flow()
 def pandas_flow():
     create_and_print_dataframe()
