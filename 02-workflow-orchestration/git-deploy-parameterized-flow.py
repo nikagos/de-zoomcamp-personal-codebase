@@ -18,7 +18,7 @@ if __name__ == "__main__":
         image=DockerImage(
             name="my-parameterized-flow-image",
             tag="v001",
-            dockerfile="Docker-parameterized-flow"
+            dockerfile="/home/nickk/de-zoomcamp-personal-codebase/02-workflow-orchestration/Dockerfile-parameterized-flow"
         ),
         push=True
     )
