@@ -16,7 +16,7 @@ if __name__ == "__main__":
         name="parameterized-flow-deployment",
         work_pool_name="my-work-pool",
         image=DockerImage(
-            name="my-parameterized-flow-image",
+            name="nikagos/my-parameterized-flow-image",
             tag="v001",
             dockerfile="/home/nickk/de-zoomcamp-personal-codebase/02-workflow-orchestration/Dockerfile-parameterized-flow"
         ),
