@@ -1,0 +1,12 @@
+FROM prefecthq/prefect:2-latest
+ 
+COPY requirements-parameterized-flow.txt .
+RUN apt-get update && apt-get -y install wget libpq-dev gcc curl
+RUN pip install -r requirements-parameterized-flow.txt --trusted-host pypi.python.org --no-cache-dir
+
+# WORKDIR /opt/prefect/flows
+COPY parameterized_flow.py /opt/prefect/flows/parameterized_flow.py
+COPY data /opt/prefect/data
+
+
+# ENTRYPOINT [ "python", "ingest_data_parquet_prefect.py" ]
