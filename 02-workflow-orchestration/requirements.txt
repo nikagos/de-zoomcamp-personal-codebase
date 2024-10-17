@@ -1,3 +1,4 @@
+numpy==1.26.4
 pandas==2.2.2
 pandas-gbq==0.23.2
 prefect==3.0.4
