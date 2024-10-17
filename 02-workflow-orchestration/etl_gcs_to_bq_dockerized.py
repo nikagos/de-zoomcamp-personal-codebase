@@ -12,8 +12,11 @@ def extract_from_gcs(year: int, month: int) -> Path:
     gcs_path = f"data/yellow_tripdata_{year}-{month:02}_clean.parquet"
     gcs_block = GcsBucket.load("zoom-gcs")
     # data_to_bq directory needs to exist in the current working directory
-    gcs_block.get_directory(from_path=gcs_path, local_path=f"./data_to_bq")
-    return Path(f"./data_to_bq/{gcs_path}")
+    # gcs_block.get_directory(from_path=gcs_path, local_path=f"./data_to_bq")
+    # return Path(f"./data_to_bq/{gcs_path}")
+    gcs_block.get_directory(from_path=gcs_path, local_path=f"./")
+    print(f"./{gcs_path}")
+    return Path(f"./{gcs_path}")
 
 
 @task(log_prints=True)
