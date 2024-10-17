@@ -32,7 +32,7 @@ def write_bq(df: pd.DataFrame, year: int, month: int) -> None:
 
     gcp_credentials_block = GcpCredentials.load("zoom-gcp-creds")
 
-    destination_table=f"dezoomcamp.yellow_trip_data_{year}-{month:02}_clean"
+    destination_table=f"dezoomcamp.yellow_tripdata_{year}-{month:02}_clean"
     print(f"Destination table: {destination_table}")
 
     df.to_gbq(
