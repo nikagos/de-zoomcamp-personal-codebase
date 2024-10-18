@@ -56,16 +56,16 @@ def etl_gcs_to_bq(year: int, month: int) -> None:
 
 
 @flow(log_prints=True)
-def etl_gcs_to_bq_parent_flow(year: int, start_month: int, end_month: int) -> None:
+def etl_gcs_to_bq_parent_flow():
     """The main ETL function"""
     # parser = argparse.ArgumentParser(description='Ingest Parquet data to GCS Bucket')
     # parser.add_argument('--start_month', required=True, help='start month of data')
     # parser.add_argument('--end_month', required=True, help='end month of data')
     # args = parser.parse_args()
 
-    # start_month = 6 #int(args.start_month)
-    # end_month = 7 #int(args.end_month)
-    # year = 2024
+    start_month = 6 #int(args.start_month)
+    end_month = 7 #int(args.end_month)
+    year = 2024
 
     for month in range(start_month, end_month+1):
         etl_gcs_to_bq(year, month)
