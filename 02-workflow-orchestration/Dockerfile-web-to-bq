@@ -4,7 +4,7 @@ COPY requirements.txt .
 RUN apt-get update && apt-get -y install wget libpq-dev gcc curl
 RUN pip install -r requirements.txt --trusted-host pypi.python.org --no-cache-dir
 
-WORKDIR /opt/prefect/data_to_bq/de-zoomcamp-personal-codebase/data_to_bq
+WORKDIR /opt/prefect/de-zoomcamp-personal-codebase/data_to_bq
 COPY etl_gcs_to_bq_dockerized.py /opt/prefect/flows/etl_gcs_to_bq_dockerized.py
 # COPY data /opt/prefect/data
 # COPY data_to_bq/data /opt/prefect/data_to_bq/data
