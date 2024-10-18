@@ -17,9 +17,13 @@ def extract_from_gcs(year: int, month: int) -> Path:
     # gcs_block.get_directory(from_path=gcs_path, local_path=f"./data_to_bq")
     # return Path(f"./data_to_bq/{gcs_path}")
     
-    gcs_block.get_directory(from_path=gcs_path, local_path=f"./")
-    print(f"./{gcs_path}")
-    return Path(f"./{gcs_path}")
+    # gcs_block.get_directory(from_path=gcs_path, local_path=f"./")
+    # print(f"./{gcs_path}")
+    # return Path(f"./{gcs_path}")
+
+    gcs_block.get_directory(from_path=gcs_path, local_path=f"../")
+    print(f"../{gcs_path}")
+    return Path(f"../{gcs_path}")
 
 
 # @task(log_prints=True)
