@@ -71,10 +71,7 @@ def etl_web_to_gcs(vehicle_type: str, year: int, month: int) -> None:
 @flow()
 def etl_parent_flow() -> None:
 
-    vehicle_type = ['yellow',
-                    'green',
-                    'fhv',
-                    'fhvhv']
+    vehicle_type = ['yellow', 'green']
 
     # testing git creds
     #parser = argparse.ArgumentParser(description='Ingest Parquet data to GCS Bucket')
