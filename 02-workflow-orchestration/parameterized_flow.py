@@ -23,16 +23,17 @@ def download_data(url: str, file_name: str) -> pd.DataFrame:
 
     file_path = "%s/%s" % (cwd, file_name)
     df = pd.read_parquet(file_path, engine='fastparquet')
-    print(df.head(10))
+    # print(df.head(10))
 
     return df
 
 
 @task(log_prints=True)
-def clean(df: pd.DataFrame) -> pd.DataFrame:
+def clean(vehicle_type: str, df: pd.DataFrame) -> pd.DataFrame:
     """Fix dtype issues"""
-    df["tpep_pickup_datetime"] = pd.to_datetime(df["tpep_pickup_datetime"])
-    df["tpep_dropoff_datetime"] = pd.to_datetime(df["tpep_dropoff_datetime"])
+    if vehicle_type == 'yellow':
+        df["tpep_pickup_datetime"] = pd.to_datetime(df["tpep_pickup_datetime"])
+        df["tpep_dropoff_datetime"] = pd.to_datetime(df["tpep_dropoff_datetime"])        
     print(df.head(2))
     # print(f"columns: {df.dtypes}")
     print(f"rows: {len(df)}")
@@ -62,10 +63,9 @@ def etl_web_to_gcs(vehicle_type: str, year: int, month: int) -> None:
     dataset_url = f"https://d37ci6vzurychx.cloudfront.net/trip-data/{dataset_file}"
 
     df = download_data(dataset_url, dataset_file)
-    
-    # df_clean = clean(df)
-    # path = write_local(df_clean, dataset_file)
-    # write_gcs(path)
+    df_clean = clean(vehicle_type, df)
+    path = write_local(df_clean, dataset_file)
+    write_gcs(path)
 
 
 @flow()
