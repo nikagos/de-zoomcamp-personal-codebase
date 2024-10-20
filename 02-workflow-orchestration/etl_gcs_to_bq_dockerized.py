@@ -7,11 +7,11 @@ from prefect_gcp import GcpCredentials
 
 
 @task(log_prints=True)
-def extract_from_gcs(year: int, month: int) -> Path:
+def extract_from_gcs(vehicle_type: str, year: int, month: int) -> Path:
     """Download trip data from GCS"""
     wd = os.getcwd()
     print(f"Working directory: {wd}")
-    gcs_path = f"data/yellow_tripdata_{year}-{month:02}_clean.parquet"
+    gcs_path = f"data/{vehicle_type}_tripdata_{year}-{month:02}_clean.parquet"
     gcs_block = GcsBucket.load("zoom-gcs")
     
     gcs_block.get_directory(from_path=gcs_path, local_path=f"./")
@@ -30,12 +30,12 @@ def transform(path: Path) -> pd.DataFrame:
 
 
 @task(log_prints=True)
-def write_bq(df: pd.DataFrame, year: int, month: int) -> None:
+def write_bq(vehicle_type: str, df: pd.DataFrame, year: int, month: int) -> None:
     """Write DataFrame to BiqQuery"""
 
     gcp_credentials_block = GcpCredentials.load("zoom-gcp-creds")
 
-    destination_table=f"dezoomcamp.yellow_tripdata_{year}-{month:02}_clean"
+    destination_table=f"dezoomcamp.{vehicle_type}_tripdata_{year}-{month:02}_clean"
     print(f"Destination table: {destination_table}")
 
     df.to_gbq(
@@ -48,8 +48,8 @@ def write_bq(df: pd.DataFrame, year: int, month: int) -> None:
 
 
 @flow(log_prints=True)
-def etl_gcs_to_bq(year: int, month: int) -> None:
-    path = extract_from_gcs(year, month)
+def etl_gcs_to_bq(vehicle_type: str, year: int, month: int) -> None:
+    path = extract_from_gcs(vehicle_type, year, month)
     df = transform(path)
     write_bq(df, year, month)
     print('Process completed successfully.')
@@ -63,12 +63,15 @@ def etl_gcs_to_bq_parent_flow():
     # parser.add_argument('--end_month', required=True, help='end month of data')
     # args = parser.parse_args()
 
+    vehicle_type = ['yellow', 'green']
+
     start_month = 6 #int(args.start_month)
     end_month = 7 #int(args.end_month)
     year = 2024
 
-    for month in range(start_month, end_month+1):
-        etl_gcs_to_bq(year, month)
+    for vehicle_type in vehicle_type:
+        for month in range(start_month, end_month+1):
+            etl_gcs_to_bq(vehicle_type, year, month)
 
 
 
