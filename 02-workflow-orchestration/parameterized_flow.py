@@ -55,9 +55,9 @@ def write_gcs(path: Path) -> None:
 
 
 @flow()
-def etl_web_to_gcs(year: int, month: int) -> None:
+def etl_web_to_gcs(vehicle_type: str, year: int, month: int) -> None:
     """The main ETL function"""
-    dataset_file = Path(f"yellow_tripdata_{year}-{month:02}.parquet")
+    dataset_file = Path(f"{vehicle_type}_tripdata_{year}-{month:02}.parquet")
     dataset_url = f"https://d37ci6vzurychx.cloudfront.net/trip-data/{dataset_file}"
 
     df = download_data(dataset_url, dataset_file)
@@ -69,6 +69,12 @@ def etl_web_to_gcs(year: int, month: int) -> None:
 
 @flow()
 def etl_parent_flow() -> None:
+
+    vehicle_type = ['yellow',
+                    'green',
+                    'fhv',
+                    'fhvhv']
+
     # testing git creds
     #parser = argparse.ArgumentParser(description='Ingest Parquet data to GCS Bucket')
     
@@ -80,8 +86,9 @@ def etl_parent_flow() -> None:
     
     year = 2024
 
-    for month in range(start_month, end_month+1):
-        etl_web_to_gcs(year, month)
+    for vehicle_type in vehicle_type:
+        for month in range(start_month, end_month+1):
+            etl_web_to_gcs(vehicle_type, year, month)
 
 
 if __name__ == "__main__":
