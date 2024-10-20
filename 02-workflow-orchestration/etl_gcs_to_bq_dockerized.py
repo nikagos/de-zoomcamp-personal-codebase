@@ -51,7 +51,7 @@ def write_bq(vehicle_type: str, df: pd.DataFrame, year: int, month: int) -> None
 def etl_gcs_to_bq(vehicle_type: str, year: int, month: int) -> None:
     path = extract_from_gcs(vehicle_type, year, month)
     df = transform(path)
-    write_bq(df, year, month)
+    write_bq(vehicle_type, df, year, month)
     print('Process completed successfully.')
 
 
